@@ -1,0 +1,52 @@
+pipeline:
+  name: demo-ci
+  identifier: democi
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  steps:
+    - step:
+        type: Run
+        identifier: build_javascript_app
+        name: Build JavaScript App
+        spec:
+          shell: Sh
+          command: |-
+            echo "Welcome to Harness CI"
+            node --version
+            npm install
+            npm run build --if-present
+            npm test
+  properties:
+    ci:
+      codebase:
+        connectorRef: hoauitconnection
+        repoName: reactcalculator
+        build: <+input>
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install denpendencies
+                  identifier: install_denpendencies
+                  spec:
+                    shell: Sh
+                    command: |-
+                      echo "Installing packages"
+                      node --version
+                      npm install
+                      npm run build --if-present
