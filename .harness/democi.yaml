@@ -4,19 +4,6 @@ pipeline:
   projectIdentifier: default_project
   orgIdentifier: default
   tags: {}
-  steps:
-    - step:
-        type: Run
-        identifier: build_javascript_app
-        name: Build JavaScript App
-        spec:
-          shell: Sh
-          command: |-
-            echo "Welcome to Harness CI"
-            node --version
-            npm install
-            npm run build --if-present
-            npm test
   properties:
     ci:
       codebase:
